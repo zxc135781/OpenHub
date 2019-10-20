@@ -191,11 +191,12 @@ public class LanguagesEditorPresenter extends BasePresenter<ILanguagesEditorCont
                     languages.addAll(getFixedLanguages());
                     try {
                         Document doc = Jsoup.parse(s, AppConfig.GITHUB_BASE_URL);
-                        Elements elements = doc.select(".col-md-3 .select-menu .select-menu-list a.select-menu-item");
+                        Elements elements = doc.select("#select-menu-language .select-menu-list a.select-menu-item");
                         for (Element element : elements) {
                             String slug = element.attr("href");
                             slug = slug.substring(slug.lastIndexOf("/") + 1);
-                            Element nameElement = element.select("span").first();
+
+                            Element nameElement = element.select(".select-menu-item-text").first();
                             String name = nameElement.textNodes().get(0).toString().trim();
                             languages.add(new TrendingLanguage(name, slug));
                         }
