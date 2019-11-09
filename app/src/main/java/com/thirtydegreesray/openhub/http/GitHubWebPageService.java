@@ -49,6 +49,12 @@ public interface GitHubWebPageService {
             @Query("since") String since
     );
 
+    @NonNull @GET("trending")
+    Observable<Response<ResponseBody>> getTrendingReposAll(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Query("since") String since
+    );
+
     @Headers("Cache-Control: public, max-age=86400")
     @NonNull @GET("trending")
     Observable<Response<ResponseBody>> getTrendingLanguages();

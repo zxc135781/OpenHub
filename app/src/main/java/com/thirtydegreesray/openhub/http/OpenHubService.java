@@ -37,6 +37,16 @@ public interface OpenHubService {
     );
 
     /**
+     * get trending repos, update every day
+     * @param since daily, weekly, monthly
+     */
+    @Headers("Cache-Control: public, max-age=86400")
+    @NonNull @GET("trending")
+    Observable<Response<ArrayList<Repository>>> getTrendingReposAll(
+            @Query("since") String since
+    );
+
+    /**
      * get trending languages, update every day
      */
     @Headers("Cache-Control: public, max-age=86400")

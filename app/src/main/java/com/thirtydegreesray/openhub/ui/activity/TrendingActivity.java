@@ -18,6 +18,7 @@ import com.thirtydegreesray.openhub.inject.component.DaggerActivityComponent;
 import com.thirtydegreesray.openhub.inject.module.ActivityModule;
 import com.thirtydegreesray.openhub.mvp.contract.ITrendingContract;
 import com.thirtydegreesray.openhub.mvp.model.TrendingLanguage;
+import com.thirtydegreesray.openhub.mvp.model.filter.TrendingSince;
 import com.thirtydegreesray.openhub.mvp.presenter.TrendingPresenter;
 import com.thirtydegreesray.openhub.ui.activity.base.PagerActivity;
 import com.thirtydegreesray.openhub.ui.adapter.base.FragmentPagerModel;
@@ -87,17 +88,19 @@ public class TrendingActivity extends PagerActivity<TrendingPresenter>
     @Override
     protected int getFragmentPosition(Fragment fragment) {
         if(fragment instanceof RepositoriesFragment){
-            String since = fragment.getArguments().getString("since");
-            if(since == null){
+            TrendingSince since = (TrendingSince) fragment.getArguments().get("since");
+            if (since == null) {
                 return -1;
-            }else if(since.equals("daily")){
-                return 0;
-            } else if(since.equals("weekly")){
-                return 1;
-            } else if(since.equals("monthly")){
-                return 2;
-            } else {
-                return -1;
+            }
+            switch (since) {
+                case Daily:
+                    return 0;
+                case Weekly:
+                    return 1;
+                case Monthly:
+                    return 2;
+                default:
+                    return -1;
             }
         }else
             return -1;
